@@ -27,9 +27,11 @@ class ResourceController extends Controller
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'quantity' => 'required|numeric|min:0',
+                'categories' => ''
             ]);
 
             $resource = Resource::create($validatedData);
+            $resource->categories()->attach($validatedData['categories']);
 
             return response()->json($resource, 201);
         } catch (ValidationException $e) {
@@ -56,9 +58,11 @@ class ResourceController extends Controller
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'quantity' => 'required|numeric|min:0',
+                'categories' => ''
             ]);
 
             $resource->update($validatedData);
+            $resource->categories()->attach($validatedData['categories']);
 
             return response()->json($resource, 200);
         } catch (ValidationException $e) {
