@@ -27,10 +27,11 @@ class ProviderController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:providers|max:255',
                 'contact' => 'required|string|max:255',
+                'resources'=> ''
             ]);
 
             $provider = Provider::create($validatedData);
-
+            $provider->resources()->attach($validatedData['resources']);
             return response()->json($provider, 201);
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->errors()], 400);
@@ -56,9 +57,12 @@ class ProviderController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:providers,email,' . $provider->id . '|max:255',
                 'contact' => 'required|string|max:255',
+                'resources' => ''
             ]);
 
             $provider->update($validatedData);
+            $provider->resources()->detach();
+            $provider->resources()->attach($validatedData['resources']);
 
             return response()->json($provider, 200);
         } catch (ValidationException $e) {

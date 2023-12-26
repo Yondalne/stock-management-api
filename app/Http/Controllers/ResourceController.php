@@ -62,6 +62,7 @@ class ResourceController extends Controller
             ]);
 
             $resource->update($validatedData);
+            $resource->categories()->detach();
             $resource->categories()->attach($validatedData['categories']);
 
             return response()->json($resource, 200);
