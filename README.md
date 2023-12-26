@@ -1,66 +1,383 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CONTRAT D'INTERFACE d'API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Remarque
 
-## About Laravel
+Le format de reponse des requêtes en `GET`, `POST`, `PUT` et `DELETE` sera comme suit :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```json
+{
+  "ressource": {
+    // ... les données de la ressource demandée
+  }
+}
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**NB**: En cas d'erreur un code `500` est retrourné (code d'erreur de la requête). 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+L'API a ete deployee sur serveur et est disponible au requete via l'url suivante : "http://stock.mdld0699.odns.fr/"
+# Authentification 
 
-## Learning Laravel
+## 1. Connexion
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Endpoint**: `api/login `
+- **Méthode HTTP**: `POST`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Exemple de requête
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Uri** : `api/login `
+- **Request-body** : 
 
-## Laravel Sponsors
+```json 
+{
+  "login": "benalicherif.yd@gmail.com",
+  "password": "password",
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Exemple de réponse
 
-### Premium Partners
+```json 
+{
+  "user" : {
+    // ... les données de l'utilisateur
+  },
+  "token": "eylkzheizomecnzioeh....",
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 2. Déconnexion
 
-## Contributing
+- **Endpoint**: `api/logout `
+- **Méthode HTTP**: `POST`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Exemple de requête
 
-## Code of Conduct
+- **Uri** : `api/logout `
+- **Request-body** : passer le token de connexion
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+# Catégorie 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 1. Liste des catégories
 
-## License
+- **Endpoint**: `api/categories`
+- **Méthode HTTP**: `GET`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Exemple de requête
+
+- **Uri** : `api/categories`
+- **Request-body** : aucun paramètre
+
+## 2. Création d'une catégorie
+
+- **Endpoint**: `api/categories`
+- **Méthode HTTP**: `POST`
+
+### Exemple de requête
+
+- **Uri** : `api/categories`
+- **Request-body** : aucun paramètre
+
+```json
+{
+  "libelle": "Vêtement Homme"
+}
+```
+
+## 3. Récupération d'une catégorie
+
+- **Endpoint**: `api/categories/:id`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/categories/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "id": 1,
+  "categorie": "Vêtement Homme",
+  "created_at": 2023-12-26 14:30:00,
+  "updated_at": 2023-12-26 14:30:00
+}
+```
+
+## 4. Modification d'une catégorie
+
+- **Endpoint**: `api/categories/:id`
+- **Méthode HTTP**: `PUT`
+
+### Exemple de requête
+
+- **Uri** : `api/categories/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "categorie": ,
+}
+```
+
+## 5. Suppression d'une catégorie
+
+- **Endpoint**: `api/categories/:id`
+- **Méthode HTTP**: `DELETE`
+
+### Exemple de requête
+
+- **Uri** : `api/categories/1`
+- **Request-body** 
+
+```json
+{
+  "id": 1
+}
+```
+
+# Opération 
+
+## 1. Liste des Opérations
+
+- **Endpoint**: `api/operations`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/operations`
+- **Request-body** : aucun paramètre
+
+## 2. Création d'une Opération
+
+- **Endpoint**: `api/operations`
+- **Méthode HTTP**: `POST`
+
+### Exemple de requête
+
+- **Uri** : `api/operations`
+- **Request-body** : aucun paramètre
+
+```json
+{
+  "libelle": "Commandes"
+}
+```
+
+## 3. Récupération d'une Opération
+
+- **Endpoint**: `api/operations/:id`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/operations/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "id": 1,
+  "categorie": "Commandes",
+  "created_at": 2023-12-26 14:30:00,
+  "updated_at": 2023-12-26 14:30:00
+}
+```
+
+## 4. Modification d'une Opération
+
+- **Endpoint**: `api/operations/:id`
+- **Méthode HTTP**: `PUT`
+
+### Exemple de requête
+
+- **Uri** : `api/operations/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "categorie": ,
+}
+```
+
+## 5. Suppression d'une Opération
+
+- **Endpoint**: `api/operations/:id`
+- **Méthode HTTP**: `DELETE`
+
+### Exemple de requête
+
+- **Uri** : `api/operations/1`
+- **Request-body** 
+
+```json
+{
+  "id": 1
+}
+```
+
+# Fournisseur 
+
+## 1. Liste des Fournisseurs
+
+- **Endpoint**: `api/providers`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/providers`
+- **Request-body** : aucun paramètre
+
+## 2. Création d'un Fournisseur
+
+- **Endpoint**: `api/providers`
+- **Méthode HTTP**: `POST`
+
+### Exemple de requête
+
+- **Uri** : `api/providers`
+- **Request-body** : aucun paramètre
+
+```json
+{
+  "libelle": "Vêtement Homme"
+}
+```
+
+## 3. Récupération d'un Fournisseur
+
+- **Endpoint**: `api/providers/:id`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/providers/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "id": 1,
+  "categorie": "Vêtement Homme",
+  "created_at": 2023-12-26 14:30:00,
+  "updated_at": 2023-12-26 14:30:00
+}
+```
+
+## 4. Modification d'un Fournisseur
+
+- **Endpoint**: `api/providers/:id`
+- **Méthode HTTP**: `PUT`
+
+### Exemple de requête
+
+- **Uri** : `api/providers/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "categorie": ,
+}
+```
+
+## 5. Suppression d'un Fournisseur
+
+- **Endpoint**: `api/providers/:id`
+- **Méthode HTTP**: `DELETE`
+
+### Exemple de requête
+
+- **Uri** : `api/providers/1`
+- **Request-body** 
+
+```json
+{
+  "id": 1
+}
+```
+
+# Ressource 
+
+## 1. Liste des ressources
+
+- **Endpoint**: `api/resources`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/resources`
+- **Request-body** : aucun paramètre
+
+## 2. Création d'une Ressource
+
+- **Endpoint**: `api/resources`
+- **Méthode HTTP**: `POST`
+
+### Exemple de requête
+
+- **Uri** : `api/resources`
+- **Request-body** : aucun paramètre
+
+```json
+{
+  "libelle": "Vêtement Homme"
+}
+```
+
+## 3. Récupération d'une Ressource
+
+- **Endpoint**: `api/resources/:id`
+- **Méthode HTTP**: `GET`
+
+### Exemple de requête
+
+- **Uri** : `api/resources/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "id": 1,
+  "categorie": "Vêtement Homme",
+  "created_at": 2023-12-26 14:30:00,
+  "updated_at": 2023-12-26 14:30:00
+}
+```
+
+## 4. Modification d'une Ressource
+
+- **Endpoint**: `api/resources/:id`
+- **Méthode HTTP**: `PUT`
+
+### Exemple de requête
+
+- **Uri** : `api/resources/1`
+- **Request-body** : aucun paramètre
+
+### Exemple de réponse
+
+```json
+{
+  "categorie": ,
+}
+```
+
+## 5. Suppression d'une Ressource
+
+- **Endpoint**: `api/resources/:id`
+- **Méthode HTTP**: `DELETE`
+
+### Exemple de requête
+
+- **Uri** : `api/resources/1`
+- **Request-body**
