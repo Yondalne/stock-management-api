@@ -14,7 +14,6 @@ Le format de reponse des requêtes en `GET`, `POST`, `PUT` et `DELETE` sera comm
 
 **NB**: En cas d'erreur un code `500` est retrourné (code d'erreur de la requête). 
 
-L'API a ete deployee sur serveur et est disponible au requete via l'url suivante : "http://stock.mdld0699.odns.fr/"
 # Authentification 
 
 ## 1. Connexion
